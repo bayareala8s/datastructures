@@ -1,2 +1,2 @@
 # datastructures
-General data structures and programs for software engineers
+Data Structures and Programs for Software Engineers
