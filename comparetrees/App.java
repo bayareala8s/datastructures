@@ -4,23 +4,28 @@ public class App {
 
     public static void main(String[] args) {
 
-        Tree<Integer> bst1 = new BinarySearchTree<>();
+        BinarySearchTree bst1 = new BinarySearchTree();
 
-        bst1.insert(2);
-        bst1.insert(55);
-        bst1.insert(67);
-        bst1.insert(12);
-        bst1.insert(11);
+        bst1.insertIterative(32);
+        bst1.insertIterative(25);
+        bst1.insertIterative(78);
+        bst1.insertIterative(10);
+        bst1.insertIterative(40);
 
-        Tree<Integer> bst2 = new BinarySearchTree<>();
+        System.out.println("Pre-Order Traversal");
+        bst1.display(0);
 
-        bst2.insert(2);
-        bst2.insert(50);
-        bst2.insert(67);
-        bst2.insert(12);
-        bst2.insert(11);
+        BinarySearchTree bst2 = new BinarySearchTree();
 
-        TreeCompareHelper<Integer> helper = new TreeCompareHelper<>();
-        System.out.println(helper.compareTrees(bst1.getRoot(), bst2.getRoot()));
+        bst2.insertIterative(32);
+        bst2.insertIterative(25);
+        bst2.insertIterative(78);
+        bst2.insertIterative(10);
+        bst2.insertIterative(40);
+
+        bst2.display(0);
+
+        TreeCompareHelper helper = new TreeCompareHelper();
+        System.out.println(helper.compareTrees(bst1.root, bst2.root));
     }
 }

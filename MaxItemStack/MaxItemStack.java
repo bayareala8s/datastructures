@@ -26,7 +26,7 @@ public class MaxItemStack {
         }
 
         //if the item is the largest one so far: we insert it onto the stack
-        if(item>maxStack.peek()) {
+        if(item > maxStack.peek()) {
             maxStack.push(item);
         } else {
             //if not the largest one then we duplicate the largest one on the maxStack
