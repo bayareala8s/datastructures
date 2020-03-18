@@ -1,10 +1,20 @@
 package com.bayareala8s.comparetrees;
 
-public interface Tree<T> {
-    public Node<T> getRoot();
-    public void traversal();
-    public void insert(T data);
-    public void delete(T data);
-    public T getMaxValue();
-    public T getMinValue();
+public interface Tree {
+
+    public boolean isEmpty();
+    public void preOrder();
+    public void inOrder();
+    public void postOrder();
+    public int height();
+    public void insertIterative(int info);
+    public void insertRecursive(int info);
+    public boolean searchIterative(int info);
+    public boolean searchRecursive(int info);
+    public int minIterative() throws Exception;
+    public int minRecursive() throws Exception;
+    public int maxIterative() throws Exception;
+    public int maxRecursive() throws Exception;
+    public void display(int traversal);
+
 }

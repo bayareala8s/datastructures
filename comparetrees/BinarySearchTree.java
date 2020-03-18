@@ -1,153 +1,276 @@
 package com.bayareala8s.comparetrees;
 
-public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
+public class BinarySearchTree implements Tree {
 
-    private Node<T> root;
+    public Node root;
 
-    @Override
-    public Node<T> getRoot() {
-        return this.root;
+    public BinarySearchTree() {
+        root = null;
     }
 
-    @Override
-    public void insert(T data) {
+    public boolean isEmpty() {
 
-        if (root == null) {
-            root = new Node<T>(data);
-        } else {
-            insertNode(data, root);
+        if(root == null)
+            return true;
+        else
+            return false;
+    }
+
+    public void preOrder()
+    {
+        if(root == null)
+        {
+            System.out.println("Tree is empty");
+            return;
         }
+
+        preOrder(root);
     }
 
-    @Override
-    public T getMaxValue() {
+    private void preOrder(Node p)
+    {
+        if(p==null)
+            return;
 
-        if (root == null)
+        System.out.println(p.info + " "); // NLR
+        preOrder(p.lChild);
+        preOrder(p.rChild);
+    }
+
+    public void inOrder()
+    {
+        if(root == null)
+        {
+            System.out.println("Tree is empty");
+            return;
+        }
+
+        inOrder(root);
+    }
+
+    private void inOrder(Node p)
+    {
+        if(p==null)
+            return;
+
+        inOrder(p.lChild); // LNR
+        System.out.println(p.info + " ");
+        inOrder(p.rChild);
+    }
+
+    public void postOrder()        // LRN
+    {
+        if(root == null)
+        {
+            System.out.println("Tree is empty");
+            return;
+        }
+
+        postOrder(root);
+    }
+
+    private void postOrder(Node p)
+    {
+        if(p==null)
+            return;
+
+        postOrder(p.lChild);
+        postOrder(p.rChild);
+        System.out.print(p.info + " ");
+
+    }
+
+    public int height()
+    {
+        return height(root);
+    }
+
+    private int height(Node root)
+    {
+        if(root == null)
+        {
+            System.out.println("Tree is empty");
+            return -1;
+        }
+
+        Node p = root;
+        int hL = height(p.lChild);
+        int hR = height(p.rChild);
+
+        if(hL > hR)
+            return 1 + hL;
+        else
+            return 1 + hR;
+    }
+
+    public void insertIterative(int info)
+    {
+        Node p = root;
+        Node parent = null;
+
+        while(p != null)
+        {
+            parent = p;
+            if(info < p.info)  // move to left child
+                p = p.lChild;
+
+            else if (info > p.info)  // move to right child
+                p = p.rChild;
+
+            else
+            {
+                System.out.println(info + "already present in the tree");
+                return;
+            }
+        }
+
+        Node temp = new Node(info);
+
+        if(parent == null) // tree is empty
+            root = temp;
+        else if (info < parent.info)
+            parent.lChild = temp;
+        else if (info > parent.info)
+            parent.rChild = temp;
+    }
+
+    public void insertRecursive(int info)
+    {
+        insert(root, info);
+    }
+
+    private Node insert(Node root, int info)
+    {
+        Node p = root;
+        if(p == null)
+        {
+            Node temp = new Node(info);
+            p = temp;
+        }
+
+        if(info < p.info) // move to left subtree
+            p.lChild = insert(p.lChild, info); // return becomes left child
+
+        else if (info > p.info) // move to right subtree
+            p.rChild = insert(p.lChild, info);
+
+        return p;
+    }
+
+    public boolean searchIterative(int info)
+    {
+        Node p = root;
+
+        while(p != null)
+        {
+            if(info < p.info)  //move to left child
+                p = p.lChild;
+
+            else if (info > p.info)
+                p= p.rChild; //move to right child
+
+            else
+                return true;
+        }
+
+        return false; // p is null
+    }
+
+    public boolean searchRecursive(int info)
+    {
+        return (search(root, info) != null);
+    }
+
+    private Node search(Node root, int info)
+    {
+        Node p = root;
+
+        if(p == null)
             return null;
 
-        return getMax(root);
+        if(info < p.info) // move to left subtree
+            return search(p.lChild, info);
+
+        if(info > p.info) // move to right child
+            return search(p.rChild, info);
+
+        return p; // key found
     }
 
-    @Override
-    public T getMinValue() {
+    public int minIterative() throws Exception
+    {
+        if(isEmpty())
+            throw new Exception("Tree is empty");
 
-        if (root == null)
-            return null;
+        Node p = root;
 
-        return getMin(root);
+        while(p.lChild != null) // reference to last node -> left child
+            p = p.lChild;
+
+        return p.info;
     }
 
-    @Override
-    public void traversal() {
-        if (root != null) {
-            inOrderTraversal(root);
-        }
+    public int maxIterative() throws Exception
+    {
+        if(isEmpty())
+            throw new Exception("Tree is empty");
+
+        Node p = root;
+
+        while(p.rChild != null) // reference to last node -> right child
+            p = p.rChild;
+
+        return p.info;
     }
 
-    private void inOrderTraversal(Node<T> node) {
+    public int minRecursive() throws Exception
+    {
+        if(isEmpty())
+            throw new Exception("Tree is empty");
 
-        if (node.getLeftChild() != null)
-            inOrderTraversal(node.getLeftChild());
-
-        System.out.print(node + "  -->  ");
-
-        if (node.getRightChild() != null)
-            inOrderTraversal(node.getRightChild());
-
+        return min(root).info;
     }
 
-    private Node<T> delete(Node<T> node, T data) {
+    public Node min(Node root)
+    {
+        Node p = root;
 
-
-        if( node == null ) return node;
-
-        if( data.compareTo(node.getData()) < 0 ) {
-            node.setLeftChild( delete(node.getLeftChild(), data) );
-        } else if ( data.compareTo(node.getData()) > 0 ) {
-            node.setRightChild( delete(node.getRightChild(), data) );
-        } else {
-
-            // we have found the node we want to remove !!!
-            if( node.getLeftChild() == null && node.getRightChild() == null ) {
-                System.out.println("Removing a leaf node...");
-                return null;
-            }
-
-            if( node.getLeftChild() == null ) {
-                System.out.println("Removing the right child...");
-                Node<T> tempNode = node.getRightChild();
-                node = null;
-                return tempNode;
-            } else if( node.getRightChild() == null ) {
-                System.out.println("Removing the left child...");
-                Node<T> tempNode = node.getLeftChild();
-                node = null;
-                return tempNode;
-            }
-
-            // this is the node with two children case !!!
-            System.out.println("Removing item with two children...");
-            Node<T> tempNode = getPredecessor(node.getLeftChild());
-
-            node.setData(tempNode.getData());
-            node.setLeftChild( delete(node.getLeftChild(), tempNode.getData()) );
-
-        }
-
-        return node;
+        if(p.lChild == null)
+            return p; // reference to last left node
+        return min(p.lChild);
     }
 
-    private Node<T> getPredecessor(Node<T> node) {
+    public int maxRecursive() throws Exception
+    {
+        if(isEmpty())
+            throw new Exception("Tree is empty");
 
-        if( node.getRightChild() != null )
-            return getPredecessor(node.getRightChild());
-
-        System.out.println("Predecessor is: "+node);
-        return node;
+        return max(root).info;
     }
 
-    private void insertNode(T newData, Node<T> node) {
+    public Node max(Node root)
+    {
+        Node p = root;
 
-        if (newData.compareTo(node.getData()) < 0) {
-            if (node.getLeftChild() != null) {
-                insertNode(newData, node.getLeftChild());
-            } else {
-                Node<T> newNode = new Node<T>(newData);
-                node.setLeftChild(newNode);
-            }
-        } else {
-            if (node.getRightChild() != null) {
-                insertNode(newData, node.getRightChild());
-            } else {
-                Node<T> newNode = new Node<T>(newData);
-                node.setRightChild(newNode);
-            }
-        }
+        if(p.rChild == null)
+            return p; // reference to last right node
+        return max(p.rChild);
     }
 
-    private T getMax(Node<T> node) {
+    public void display(int traversal) {
 
-        if (node.getRightChild() != null) {
-            return getMax(node.getRightChild());
+        switch(traversal) {
+            case 0:
+                preOrder();
+                break;
+            case 1:
+                inOrder();
+                break;
+            default:
+                postOrder();
+                break;
         }
 
-        return node.getData();
-    }
 
-    private T getMin(Node<T> node) {
-
-        if (node.getLeftChild() != null) {
-            return getMin(node.getLeftChild());
-        }
-
-        return node.getData();
-    }
-
-    @Override
-    public void delete(T data) {
-
-        if (root != null)
-            root = delete(root, data);
     }
 }
-

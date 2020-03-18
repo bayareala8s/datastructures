@@ -11,7 +11,7 @@ public class ReverseArray {
         int endIndex = nums.length-1;
 
         //we swap 2 items in 1 iteration: so we just have to make N/2 iterations
-        while(endIndex>startIndex) {
+        while(endIndex > startIndex) {
 
             //swap two items with index endIndex and startIndex
             swap(nums,startIndex,endIndex);
@@ -24,9 +24,9 @@ public class ReverseArray {
         return nums;
     }
 
-    private void swap(int[] nums, int index1, int index2) {
-        int temp = nums[index1];
-        nums[index1] = nums[index2];
-        nums[index2] = temp;
+    private void swap(int[] nums, int startIndex, int endIndex) {
+        int temp = nums[startIndex];
+        nums[startIndex] = nums[endIndex];
+        nums[endIndex] = temp;
     }
 }
