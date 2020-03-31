@@ -1,4 +1,6 @@
-package com.bayareala8s.DirectedGraph;
+package com.bayareala8s.dfs;
+
+import com.bayareala8s.dfs.DirectedGraph;
 
 public class App {
 
@@ -14,6 +16,8 @@ public class App {
         dg.insertVertex("Seven");
         dg.insertVertex("Eight");
         dg.insertVertex("Nine");
+        dg.insertVertex("Ten");
+        dg.insertVertex("Eleven");
 
 
         dg.insertEdge("Zero","One");
@@ -21,22 +25,22 @@ public class App {
         dg.insertEdge("One","Two");
         dg.insertEdge("One","Four");
         dg.insertEdge("One","Five");
-        dg.insertEdge("Two","Three");
         dg.insertEdge("Two","Five");
+        dg.insertEdge("Two","Seven");
         dg.insertEdge("Three","Six");
-        dg.insertEdge("Four","Five");
-        dg.insertEdge("Four","Seven");
+        dg.insertEdge("Four","Three");
+        dg.insertEdge("Five","Three");
         dg.insertEdge("Five","Six");
         dg.insertEdge("Five","Eight");
-        dg.insertEdge("Six","Eight");
-        dg.insertEdge("Six","Nine");
         dg.insertEdge("Seven","Eight");
-        dg.insertEdge("Eight","Nine");
+        dg.insertEdge("Seven","Ten");
+        dg.insertEdge("Eight","Eleven");
+        dg.insertEdge("Eleven","Nine");
 
         dg.display();
         System.out.println("Vertices = " + dg.vertices()+ ", Edges = " + dg.edges());
 
-        dg.bfsTraversal();
-        dg.bfsTraversal_All();
+        dg.dfsTraversal();
+        dg.dfsTraversal_All();
     }
 }

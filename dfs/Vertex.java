@@ -1,4 +1,4 @@
-package com.bayareala8s.DirectedGraph;
+package com.bayareala8s.dfs;
 
 public class Vertex {
     String name;
