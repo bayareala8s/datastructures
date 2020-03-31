@@ -1,8 +1,11 @@
-package com.bayareala8s.DirectedGraph;
+package com.bayareala8s.dfs;
+
+import com.bayareala8s.dfs.Vertex;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class DirectedGraph {
     public final int MAX_VERTICES = 30;
@@ -14,8 +17,7 @@ public class DirectedGraph {
 
     //constants for different states of a vertex
     private static final int INITIAL = 0;
-    private static final int WAITING = 1;
-    private static final int VISITED = 2;
+    private static final int VISITED = 1;
 
     public DirectedGraph() {
         adj = new boolean[MAX_VERTICES][MAX_VERTICES];
@@ -113,7 +115,7 @@ public class DirectedGraph {
         return in;
     }
 
-    public void bfsTraversal() {
+    public void dfsTraversal() {
 
         for(int v = 0; v < n; v++) {
 
@@ -121,51 +123,49 @@ public class DirectedGraph {
         }
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter starting vertex for Breadth First Search");
+        System.out.print("Enter starting vertex for Depth First Search");
 
         String s = scan.next();
-        bfs(getIndex(s));
+        dfs(getIndex(s));
 
     }
 
-    private void bfs(int v) {
+    private void dfs(int v) {
 
-        Queue<Integer> qu = new LinkedList<Integer>();
-        qu.add(v);
-        vertexList[v].state = WAITING;
+        Stack<Integer> st = new Stack<Integer>();
+        st.push(v);
 
-        while(!qu.isEmpty()) {
+        while (!st.isEmpty()) {
 
-            v = qu.remove();
-            System.out.print(vertexList[v] + " ");
-            vertexList[v].state = VISITED;
+            v = st.pop();
+            if (vertexList[v].state == INITIAL) {
 
-            for(int i = 0; i < n; i++) {
-                if(isAdjacent(v,i) && vertexList[i].state == INITIAL) {
-                    qu.add(i);
-                    vertexList[i].state = WAITING;
-                }
+                System.out.print(vertexList[v] + " ");
+                vertexList[v].state = VISITED;
+            }
+            for (int i = n - 1; i >= 0; i--) {
+
+                if (isAdjacent(v, i) && vertexList[i].state == INITIAL)
+                    st.push(i);
             }
         }
-
         System.out.println();
-
     }
 
-    public void bfsTraversal_All() {
+    public void dfsTraversal_All() {
         int v;
         for(v = 0; v < n; v++)
             vertexList[v].state = INITIAL;
 
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter starting vertex for Breadth First Search");
+        System.out.print("Enter starting vertex for Depth First Search");
 
         String s = scan.next();
-        bfs(getIndex(s));
+        dfs(getIndex(s));
 
         for(v=0; v<n; v++) {
             if(vertexList[v].state == INITIAL)
-                bfs(v);
+                dfs(v);
         }
     }
 
