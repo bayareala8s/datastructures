@@ -1,6 +1,6 @@
-package com.bayareala8s.comparetrees;
+package com.bayareala8s.CompareTrees;
 
-public class BinarySearchTree implements Tree {
+public class BinarySearchTree {
 
     public Node root;
 
@@ -29,10 +29,11 @@ public class BinarySearchTree implements Tree {
 
     private void preOrder(Node p)
     {
+        //base case
         if(p==null)
             return;
 
-        System.out.println(p.info + " "); // NLR
+        System.out.print(p.info + " "); // NLR
         preOrder(p.lChild);
         preOrder(p.rChild);
     }
@@ -54,7 +55,7 @@ public class BinarySearchTree implements Tree {
             return;
 
         inOrder(p.lChild); // LNR
-        System.out.println(p.info + " ");
+        System.out.print(p.info + " ");
         inOrder(p.rChild);
     }
 
@@ -103,127 +104,106 @@ public class BinarySearchTree implements Tree {
             return 1 + hR;
     }
 
-    public void insertIterative(int info)
+    //1. Run time is O(h), where h is the height of the tree
+    public void insert(int x)
     {
-        Node p = root;
-        Node parent = null;
-
-        while(p != null)
-        {
-            parent = p;
-            if(info < p.info)  // move to left child
-                p = p.lChild;
-
-            else if (info > p.info)  // move to right child
-                p = p.rChild;
-
-            else
-            {
-                System.out.println(info + "already present in the tree");
-                return;
-            }
-        }
-
-        Node temp = new Node(info);
-
-        if(parent == null) // tree is empty
-            root = temp;
-        else if (info < parent.info)
-            parent.lChild = temp;
-        else if (info > parent.info)
-            parent.rChild = temp;
+        root = insert(root, x);
     }
 
-    public void insertRecursive(int info)
+    //1. Terminating conditions p == null or x == p.info
+    private Node insert(Node p, int x)
     {
-        insert(root, info);
-    }
-
-    private Node insert(Node root, int info)
-    {
-        Node p = root;
         if(p == null)
-        {
-            Node temp = new Node(info);
-            p = temp;
-        }
+            p = new Node(x);
 
-        if(info < p.info) // move to left subtree
-            p.lChild = insert(p.lChild, info); // return becomes left child
+        else if(x < p.info) // move to left subtree
+            p.lChild = insert(p.lChild, x); // return becomes left child
 
-        else if (info > p.info) // move to right subtree
-            p.rChild = insert(p.lChild, info);
+        else if (x > p.info) // move to right subtree
+            p.rChild = insert(p.rChild, x);
+
+        else
+            System.out.println(x + " already present in tree");
 
         return p;
     }
 
-    public boolean searchIterative(int info)
+
+    //1. Run time is O(h), where h is the height of the tree
+    public boolean search(int x)
     {
-        Node p = root;
-
-        while(p != null)
-        {
-            if(info < p.info)  //move to left child
-                p = p.lChild;
-
-            else if (info > p.info)
-                p= p.rChild; //move to right child
-
-            else
-                return true;
-        }
-
-        return false; // p is null
+        return (search(root, x) != null);
     }
 
-    public boolean searchRecursive(int info)
+    //1. x is the key to be searched
+    //2. Start at the root node and move down the tree
+    //3. if x is equal to the key in the current node - Search is successful
+    //4. if x is less than the key in the current node - Move to left child
+    //5. if x is greater than the key in the current node - Move to right child
+    //6. if we reach a NULL left child or NULL right child - Search is unsuccessful
+    private Node search(Node root, int x)
     {
-        return (search(root, info) != null);
-    }
+        //base case
+        if(root == null)
+            return null; //Key not found
 
-    private Node search(Node root, int info)
-    {
         Node p = root;
 
-        if(p == null)
-            return null;
+        if(x < p.info) // move to left subtree
+            return search(p.lChild, x);
 
-        if(info < p.info) // move to left subtree
-            return search(p.lChild, info);
-
-        if(info > p.info) // move to right child
-            return search(p.rChild, info);
+        if(x > p.info) // move to right child
+            return search(p.rChild, x);
 
         return p; // key found
     }
 
-    public int minIterative() throws Exception
-    {
-        if(isEmpty())
-            throw new Exception("Tree is empty");
-
-        Node p = root;
-
-        while(p.lChild != null) // reference to last node -> left child
-            p = p.lChild;
-
-        return p.info;
+    public void delete(int x) {
+        root = delete(root, x);
     }
 
-    public int maxIterative() throws Exception
-    {
-        if(isEmpty())
-            throw new Exception("Tree is empty");
+    private Node delete(Node p, int x) {
 
-        Node p = root;
+        Node child, successor;
 
-        while(p.rChild != null) // reference to last node -> right child
-            p = p.rChild;
+        if(p == null) {
+            System.out.println(x + " not found");
+            return p;
+        }
 
-        return p.info;
+        if(x < p.info) //delete from left subtree
+            p.lChild = delete(p.lChild, x);
+
+        else if(x > p.info) //delete from right subtree
+            p.rChild = delete(p.rChild,x);
+
+        else { //key to be deleted is found
+
+            if(p.lChild != null & p.rChild != null) { //2 children case
+
+                successor = p.rChild;
+                while(successor.lChild != null)
+                    successor = successor.lChild;
+
+                p.info = successor.info;
+                p.rChild = delete(p.rChild, successor.info);
+            }
+            else { //1 child or no child
+
+                if(p.lChild != null) //only left child
+                    child = p.lChild;
+                else
+                    child = p.rChild;
+
+                p = child;
+            }
+        }
+        return p;
     }
 
-    public int minRecursive() throws Exception
+    //1. Node with smallest key
+    //2. Last node in the leftmost path starting from root
+    public int min() throws Exception
     {
         if(isEmpty())
             throw new Exception("Tree is empty");
@@ -231,16 +211,20 @@ public class BinarySearchTree implements Tree {
         return min(root).info;
     }
 
-    public Node min(Node root)
+    private Node min(Node root)
     {
         Node p = root;
 
+        //base case
         if(p.lChild == null)
             return p; // reference to last left node
+
         return min(p.lChild);
     }
 
-    public int maxRecursive() throws Exception
+    //1. Node with largest key
+    //2. Last node in the rightmost path starting from root
+    public int max() throws Exception
     {
         if(isEmpty())
             throw new Exception("Tree is empty");
@@ -248,29 +232,64 @@ public class BinarySearchTree implements Tree {
         return max(root).info;
     }
 
-    public Node max(Node root)
+    private Node max(Node root)
     {
         Node p = root;
 
         if(p.rChild == null)
             return p; // reference to last right node
+
         return max(p.rChild);
     }
 
-    public void display(int traversal) {
+    public void display() {
 
-        switch(traversal) {
-            case 0:
-                preOrder();
-                break;
-            case 1:
-                inOrder();
-                break;
-            default:
-                postOrder();
-                break;
+        display(root, 0);
+        System.out.println();
+
+    }
+
+    private void display(Node root, int level) {
+
+        int i;
+
+        if(root == null)
+            return;
+
+        Node p = root;
+
+        display(p.rChild, level + 1);
+        System.out.println();
+
+        for(i = 0; i<level;i++) {
+            System.out.print("     ");
         }
 
+        System.out.print(p.info);
 
+        display(p.lChild, level + 1);
+    }
+
+
+    public int size() {
+
+        if (root == null) {
+            System.out.println("Tree is empty");
+            return 0;
+        }
+
+        return size(root);
+
+    }
+
+    private int size(Node root) {
+
+        if (root == null) {
+            return 0;
+        }
+
+        Node p = root;
+
+        return (size(p.lChild) + size(p.rChild) + 1);
     }
 }
