@@ -1,4 +1,4 @@
-package com.bayareala8s.CompareTrees;
+package com.bayareala8s.sort;
 
 public class Node {
 

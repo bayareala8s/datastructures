@@ -1,4 +1,4 @@
-package com.bayareala8s.CompareTrees;
+package com.bayareala8s.CheckBalancedBST;
 
 public class Node {
 

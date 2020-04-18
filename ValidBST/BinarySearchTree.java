@@ -1,8 +1,10 @@
-package com.bayareala8s.CompareTrees;
+package com.bayareala8s.ValidBST;
+
+import com.bayareala8s.ValidBST.Node;
 
 public class BinarySearchTree {
 
-    public Node root;
+    private Node root;
 
     public BinarySearchTree() {
         root = null;
@@ -291,5 +293,55 @@ public class BinarySearchTree {
         Node p = root;
 
         return (size(p.lChild) + size(p.rChild) + 1);
+    }
+
+    public Node createMinimalBST(int[] array) {
+
+        root = createMinimalBST(array, 0, array.length - 1);
+        return root;
+    }
+
+    private Node createMinimalBST(int arr[], int start, int end) {
+
+        if (end < start) {
+            return null;
+        }
+        int mid = (start + end) / 2;
+
+        Node p = new Node(arr[mid]);
+        p.lChild = createMinimalBST(arr, start, mid - 1);
+        p.rChild = createMinimalBST(arr, mid + 1, end);
+        return p;
+    }
+
+    public boolean checkBST(Node root) {
+
+        return checkBST(root, null, null);
+    }
+
+    //1. Start with a range of min = NULL, max  = NULL. E.g root node
+    //2. Left subtree nodes are within range min = NULL, max = 20
+    //3. Right subtree nodes are within range min = 20, max = NULL
+    //4. When we branch left max gets updated
+    //5. When we branch right min gets updated
+    //6. If anything fails these checks, we stop and return false
+    private boolean checkBST(Node root, Integer min, Integer max) {
+
+        if (root == null) {
+            return true;
+        }
+
+        Node p = root;
+
+        //When we branch left, the max gets updated
+        //When we branch right, the min gets updated
+        if ((min != null && p.info <= min) || (max != null && p.info > max)) {
+            return false;
+        }
+
+        if (!checkBST(p.lChild, min, p.info) || !checkBST(p.rChild, p.info, max)) {
+            return false;
+        }
+        return true;
     }
 }

@@ -1,8 +1,8 @@
-package com.bayareala8s.CompareTrees;
+package com.bayareala8s.CheckBalancedBST;
 
 public class BinarySearchTree {
 
-    public Node root;
+    private Node root;
 
     public BinarySearchTree() {
         root = null;
@@ -291,5 +291,65 @@ public class BinarySearchTree {
         Node p = root;
 
         return (size(p.lChild) + size(p.rChild) + 1);
+    }
+
+    public Node createMinimalBST(int[] array) {
+
+        root = createMinimalBST(array, 0, array.length - 1);
+        return root;
+    }
+    
+    private Node createMinimalBST(int arr[], int start, int end){
+
+        if (end < start) {
+            return null;
+        }
+        int mid = (start + end) / 2;
+
+        Node p = new Node(arr[mid]);
+        p.lChild = createMinimalBST(arr, start, mid - 1);
+        p.rChild = createMinimalBST(arr, mid + 1, end);
+        return p;
+    }
+
+    public boolean isBalanced(Node root) {
+
+        if(root == null) {
+            System.out.println("Tree is empty");
+            return false;
+        }
+
+        return checkHeight(root) != -1;
+    }
+
+    //1. Get the height of the left and right subtree as we recurse down from the root
+    //2. A balanced tree is defined to be a tree such that the heights of the two subtrees of any
+    // node never differ by more than one.
+    private int checkHeight(Node root) {
+
+        if(root == null) {
+            return 0;
+        }
+
+        Node p = root;
+        int hL = checkHeight(p.lChild);
+
+        if(hL == -1) {   // Not balanced
+            return -1;
+        }
+
+        int hR = checkHeight(p.rChild);
+
+        if(hR == -1) { // Not balanced
+            return -1;
+        }
+
+        int heightDiff = hL - hR;
+
+        if(Math.abs(heightDiff) > 1) {
+            return -1; //return error code
+        }
+        else
+            return Math.max(hL,hR) + 1; //return height
     }
 }

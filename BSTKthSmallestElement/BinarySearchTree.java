@@ -1,8 +1,8 @@
-package com.bayareala8s.CompareTrees;
+package com.bayareala8s.BSTKthSmallestElement;
 
 public class BinarySearchTree {
 
-    public Node root;
+    private Node root;
 
     public BinarySearchTree() {
         root = null;
@@ -292,4 +292,41 @@ public class BinarySearchTree {
 
         return (size(p.lChild) + size(p.rChild) + 1);
     }
+
+    public int getKthSmallestElement(int k) {
+
+        if (root == null) {
+            System.out.println("Tree is empty");
+            return -1;
+        }
+
+        return getKthSmallestElement(root, k).info;
+    }
+
+    private Node getKthSmallestElement(Node p, int x) {
+
+        //number of nodes in the left subtree
+        //+1 because we count the root node of the subtree as well
+        int lsize = size(p.lChild) + 1;
+
+        //this is when we find the kth smallest item
+        if(lsize == x) {
+            return p;
+        }
+
+        //if the number of nodes in the left subtree > k-th smallest item
+        //it means the k-th smallest item is in the left subtree
+        if(lsize > x)
+            return getKthSmallestElement(p.lChild, x);
+
+        //if the number of nodes in the left subtree is smaller then the k-th
+        //smallest item then we can discard the left subtree and consider the
+        //right substree
+        //NOW WE ARE NOT LOOKING FOR THE K-TH BUT THE K-Nth SMALLEST ITEM
+        if(lsize < x)
+            return getKthSmallestElement(p.rChild, x - lsize);
+
+        return null;
+    }
+
 }

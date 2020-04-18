@@ -1,8 +1,10 @@
-package com.bayareala8s.CompareTrees;
+package com.bayareala8s.MinimalBST;
+
+import java.lang.NullPointerException;
 
 public class BinarySearchTree {
 
-    public Node root;
+    private Node root;
 
     public BinarySearchTree() {
         root = null;
@@ -291,5 +293,30 @@ public class BinarySearchTree {
         Node p = root;
 
         return (size(p.lChild) + size(p.rChild) + 1);
+    }
+
+    public Node createMinimalBST(int[] array) {
+
+        root = createMinimalBST(array, 0, array.length - 1);
+        return root;
+    }
+
+    //1.Root to be the middle of the array
+    //2. Half elements would be less than the root and half would be greater than it
+    //3. Insert into the tree the middle element of the array
+    //4. Insert into the left subtree the left subarray elements.
+    //5. Insert into the right subtree the right subarray elements.
+    //6. Recurse
+    private Node createMinimalBST(int arr[], int start, int end) {
+
+        if (end < start) {
+            return null;
+        }
+        int mid = (start + end) / 2;
+
+        Node p = new Node(arr[mid]);
+        p.lChild = createMinimalBST(arr, start, mid - 1);
+        p.rChild = createMinimalBST(arr, mid + 1, end);
+        return p;
     }
 }

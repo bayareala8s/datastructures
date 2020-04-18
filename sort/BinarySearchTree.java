@@ -1,8 +1,9 @@
-package com.bayareala8s.CompareTrees;
+package com.bayareala8s.sort;
 
 public class BinarySearchTree {
 
-    public Node root;
+    private Node root;
+    private static int x;
 
     public BinarySearchTree() {
         root = null;
@@ -38,25 +39,20 @@ public class BinarySearchTree {
         preOrder(p.rChild);
     }
 
-    public void inOrder()
+    public void inOrder(int[] a)
     {
-        if(root == null)
-        {
-            System.out.println("Tree is empty");
-            return;
-        }
-
-        inOrder(root);
+        x = 0;
+        inOrder(root, a);
     }
 
-    private void inOrder(Node p)
+    private void inOrder(Node p, int[] a)
     {
         if(p==null)
             return;
 
-        inOrder(p.lChild); // LNR
-        System.out.print(p.info + " ");
-        inOrder(p.rChild);
+        inOrder(p.lChild, a); // LNR
+        a[x++] = p.info;
+        inOrder(p.rChild,a);
     }
 
     public void postOrder()        // LRN
