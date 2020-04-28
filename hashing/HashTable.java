@@ -1,9 +1,9 @@
-package com.bayareala8s.hashing;
+package com.bayareala8s.Hashing;
 
 public class HashTable {
 
     private studentRecord[] array;
-    private int m; //size of the array
+    private int m; //size of the array or hashtable
     int n; //number of records
 
     public HashTable() {
@@ -19,13 +19,13 @@ public class HashTable {
 
     int hash(int key) {
 
-        return (key % m);
+        return (key % m); //Hash function to map keys to array indices
     }
 
-    public void insert(studentRecord newRecord) {
+    public void insert(studentRecord newRecord) { //Using linear probing technique
 
         int key = newRecord.getStudentId();
-        int h = hash(key);
+        int h = hash(key); //We find hash value
         int location = h;
 
         for(int i = 1; i < m; i++) {
@@ -37,13 +37,13 @@ public class HashTable {
                 return;
             }
 
-            if(array[location].getStudentId() == key)
+            if(array[location].getStudentId() == key) //Found the key throw exception
                 throw new UnsupportedOperationException("Duplicate key");
 
             //Next probe location
             location = (h + i) % m;
         }
-        System.out.println("Table is full : Record can't be inserted");
+        System.out.println("Table is full : Record can't be inserted"); //Visited whole table and found any empty location
 
     }
 
@@ -60,13 +60,13 @@ public class HashTable {
             if(array[location].getStudentId() == key)
                 return array[location];
 
-            location = (h + i) % m;
+            location = (h + i) % m; //linear probing. Calculate next probe location
         }
         //Key not found
-        return null;
+        return null; //Visited whole table and key not found
     }
 
-    public void DisplayTable() {
+    public void DisplayTable() {      //Display HashTable
         for(int i=0; i < m ; i++) {
 
             System.out.print("[" + i + "] --> ");
@@ -91,7 +91,7 @@ public class HashTable {
             if(array[location].getStudentId() == key) {
 
                 studentRecord temp = array[location];
-                array[location].setStudentId(-1);
+                array[location].setStudentId(-1); // -1 to delete record
                 n--;
                 return temp;
             }
