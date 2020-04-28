@@ -7,20 +7,21 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
+
 public class DirectedGraph {
     public final int MAX_VERTICES = 30;
 
     int n; //no of vertices in graph
     int e; //no of edges in graph
-    boolean [][] adj;
+    boolean [][] adjacencyMatrix;
     Vertex[] vertexList;
 
     //constants for different states of a vertex
-    private static final int INITIAL = 0;
-    private static final int VISITED = 1;
+    private static final int INITIAL = 0; //Initially all vertices will be in INITIAL state
+    private static final int VISITED = 1; //When a vertex is visited state will be change to INITIAL -> VISITED
 
     public DirectedGraph() {
-        adj = new boolean[MAX_VERTICES][MAX_VERTICES];
+        adjacencyMatrix = new boolean[MAX_VERTICES][MAX_VERTICES];
         vertexList = new Vertex[MAX_VERTICES];
         // By default n=0, e=0
         // By default adj[u][v] = false
@@ -38,7 +39,7 @@ public class DirectedGraph {
     public void display() {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++)
-                if(adj[i][j])
+                if(adjacencyMatrix[i][j])
                     System.out.print("1 ");
                 else
                     System.out.print("0 ");
@@ -63,7 +64,7 @@ public class DirectedGraph {
     }
 
     private boolean isAdjacent(int u, int v) {
-        return adj[u][v];
+        return adjacencyMatrix[u][v];
     }
 
     /*Insert an edge (s1, s2) */
@@ -72,10 +73,10 @@ public class DirectedGraph {
         int v = getIndex(s2);
         if(u == v)
             throw new IllegalArgumentException("Not a valid edge");
-        if(adj[u][v] == true)
+        if(adjacencyMatrix[u][v] == true)
             System.out.print("Edge already present");
         else {
-            adj[u][v] = true;
+            adjacencyMatrix[u][v] = true;
             e++;
         }
     }
@@ -84,21 +85,21 @@ public class DirectedGraph {
         int u = getIndex(s1);
         int v = getIndex(s2);
 
-        if(adj[u][v] == false)
+        if(adjacencyMatrix[u][v] == false)
             System.out.println("Edge not present in the graph");
         else {
-            adj[u][v] = false;
+            adjacencyMatrix[u][v] = false;
             e--;
         }
     }
 
-    /* Returns number of adges going out from a vertex */
+    /* Returns number of edges going out from a vertex */
     public int outdegree(String s) {
         int u = getIndex(s);
 
         int out = 0;
         for(int v=0; v<n; v++)
-            if(adj[u][v])
+            if(adjacencyMatrix[u][v])
                 out++;
 
         return out;
@@ -110,7 +111,7 @@ public class DirectedGraph {
 
         int in = 0;
         for(int v = 0; v < n; v++)
-            if(adj[v][u])
+            if(adjacencyMatrix[v][u])
                 in++;
         return in;
     }
@@ -119,7 +120,7 @@ public class DirectedGraph {
 
         for(int v = 0; v < n; v++) {
 
-            vertexList[v].state = INITIAL;
+            vertexList[v].state = INITIAL; //state of all vertices is INITIAL
         }
 
         Scanner scan = new Scanner(System.in);
@@ -130,20 +131,22 @@ public class DirectedGraph {
 
     }
 
+    //1. Visit all vertices in any path starting from start vertex
+    //2. Dead end - Vertex with no unvisited adjacent vertices
     private void dfs(int v) {
 
-        Stack<Integer> st = new Stack<Integer>();
-        st.push(v);
+        Stack<Integer> st = new Stack<Integer>(); //Intially all vertices are in INITIAL state and stack is empty
+        st.push(v); //Push start vertex on the stack
 
         while (!st.isEmpty()) {
 
             v = st.pop();
             if (vertexList[v].state == INITIAL) {
 
-                System.out.print(vertexList[v] + " ");
+                System.out.print(vertexList[v] + " "); //visit and change state to visited
                 vertexList[v].state = VISITED;
             }
-            for (int i = n - 1; i >= 0; i--) {
+            for (int i = n - 1; i >= 0; i--) {  //Push all those adjacent vertices of v which have not been visited
 
                 if (isAdjacent(v, i) && vertexList[i].state == INITIAL)
                     st.push(i);
