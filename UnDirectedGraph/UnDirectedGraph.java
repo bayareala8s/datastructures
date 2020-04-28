@@ -7,11 +7,11 @@ public class UnDirectedGraph {
 
     int n; //no of vertices in graph
     int e; //no of edges in graph
-    boolean [][] adj;
+    boolean [][] adjacencyMatrix;
     Vertex[] vertexList;
 
     public UnDirectedGraph() {
-        adj = new boolean[MAX_VERTICES][MAX_VERTICES];
+        adjacencyMatrix = new boolean[MAX_VERTICES][MAX_VERTICES];
         vertexList = new Vertex[MAX_VERTICES];
         // By default n=0, e=0
         // By default adj[u][v] = false
@@ -29,7 +29,7 @@ public class UnDirectedGraph {
     public void display() {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++)
-                if(adj[i][j])
+                if(adjacencyMatrix[i][j])
                     System.out.print("1 ");
                 else
                     System.out.print("0 ");
@@ -54,7 +54,7 @@ public class UnDirectedGraph {
     }
 
     private boolean isAdjacent(int u, int v) {
-        return adj[u][v];
+        return adjacencyMatrix[u][v];
     }
 
     /*Insert an edge (s1, s2) */
@@ -63,11 +63,11 @@ public class UnDirectedGraph {
         int v = getVertexIndex(s2);
         if(u == v)
             throw new IllegalArgumentException("Not a valid edge");
-        if(adj[u][v] == true)
+        if(adjacencyMatrix[u][v] == true)
             System.out.print("Edge already present");
         else {
-            adj[u][v] = true;
-            adj[v][u] = true;
+            adjacencyMatrix[u][v] = true;
+            adjacencyMatrix[v][u] = true;
             e++;
         }
     }
@@ -76,11 +76,11 @@ public class UnDirectedGraph {
         int u = getVertexIndex(s1);
         int v = getVertexIndex(s2);
 
-        if(adj[u][v] == false)
+        if(adjacencyMatrix[u][v] == false)
             System.out.println("Edge not present in the graph");
         else {
-            adj[u][v] = false;
-            adj[v][u] = false;
+            adjacencyMatrix[u][v] = false;
+            adjacencyMatrix[v][u] = false;
             e--;
         }
     }
@@ -90,7 +90,7 @@ public class UnDirectedGraph {
 
         int deg = 0;
         for(int v = 0; v < n; v++)
-            if(adj[u][v])
+            if(adjacencyMatrix[u][v])
                 deg++;
         return deg;
     }
