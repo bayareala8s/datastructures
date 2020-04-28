@@ -4,21 +4,23 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+//Adjacency matrix representation of an unweighted directed graph
 public class DirectedGraph {
     public final int MAX_VERTICES = 30;
 
     int n; //no of vertices in graph
     int e; //no of edges in graph
-    boolean [][] adj;
-    Vertex[] vertexList;
+    boolean [][] adjacencyMatrix; //2-D array for adjacency matrix in graph. true for 1 & false for 0
+    Vertex[] vertexList; // Stores all the vertices of graph
 
-    //constants for different states of a vertex
-    private static final int INITIAL = 0;
-    private static final int WAITING = 1;
-    private static final int VISITED = 2;
+    //constants for different states of a vertex used for BFS Traversal
+    private static final int INITIAL = 0; //All vertices in initial state. //Queue is empty
+    private static final int WAITING = 1; //Vertex is inserted in the queue
+    private static final int VISITED = 2; //Vertex is visited
 
     public DirectedGraph() {
-        adj = new boolean[MAX_VERTICES][MAX_VERTICES];
+
+        adjacencyMatrix = new boolean[MAX_VERTICES][MAX_VERTICES]; //all the elements are set to false
         vertexList = new Vertex[MAX_VERTICES];
         // By default n=0, e=0
         // By default adj[u][v] = false
@@ -26,27 +28,33 @@ public class DirectedGraph {
     }
 
     public int vertices() {
+
+        //returns total number of vertices in a graph
         return n;
     }
 
     public int edges() {
+
+        //returns total number of edges in a graph
         return e;
     }
 
+    //Print 2-D array row by row
     public void display() {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++)
-                if(adj[i][j])
-                    System.out.print("1 ");
+                if(adjacencyMatrix[i][j])
+                    System.out.print("1 "); //for elements which are true print 1
                 else
-                    System.out.print("0 ");
+                    System.out.print("0 "); //for elements which are false print 0
             System.out.println();
         }
     }
 
     public void insertVertex(String name) {
-        vertexList[n++] = new Vertex(name);
+        vertexList[n++] = new Vertex(name); //Increment total count of Vertices
     }
+
 
     private int getIndex(String s) {
         for(int i = 0; i < n; i++)
@@ -61,7 +69,7 @@ public class DirectedGraph {
     }
 
     private boolean isAdjacent(int u, int v) {
-        return adj[u][v];
+        return adjacencyMatrix[u][v];
     }
 
     /*Insert an edge (s1, s2) */
@@ -70,11 +78,11 @@ public class DirectedGraph {
         int v = getIndex(s2);
         if(u == v)
             throw new IllegalArgumentException("Not a valid edge");
-        if(adj[u][v] == true)
+        if(adjacencyMatrix[u][v] == true)
             System.out.print("Edge already present");
         else {
-            adj[u][v] = true;
-            e++;
+            adjacencyMatrix[u][v] = true;
+            e++; //increment total count of edges
         }
     }
 
@@ -82,39 +90,42 @@ public class DirectedGraph {
         int u = getIndex(s1);
         int v = getIndex(s2);
 
-        if(adj[u][v] == false)
+        if(adjacencyMatrix[u][v] == false)
             System.out.println("Edge not present in the graph");
         else {
-            adj[u][v] = false;
-            e--;
+            adjacencyMatrix[u][v] = false;
+            e--; //decrement count of Vertices
         }
     }
 
-    /* Returns number of adges going out from a vertex */
+    /* Returns number of edges going out from a vertex - row addition of all true */
     public int outdegree(String s) {
         int u = getIndex(s);
 
         int out = 0;
         for(int v=0; v<n; v++)
-            if(adj[u][v])
+            if(adjacencyMatrix[u][v])
                 out++;
 
         return out;
     }
 
-    /* Returns number of edges coming to a vertex */
+    /* Returns number of edges coming to a vertex - column addition of all true */
     public int indegree(String s) {
         int u = getIndex(s);
 
         int in = 0;
         for(int v = 0; v < n; v++)
-            if(adj[v][u])
+            if(adjacencyMatrix[v][u])
                 in++;
         return in;
     }
 
+    // Start vertex is visited, then all vertices adjacent to start vertex are visited
+    // Take these adjacent vertices one by one and visit their adjacent vertices
     public void bfsTraversal() {
 
+        //All vertices to state INITIAL
         for(int v = 0; v < n; v++) {
 
             vertexList[v].state = INITIAL;
@@ -131,19 +142,20 @@ public class DirectedGraph {
     private void bfs(int v) {
 
         Queue<Integer> qu = new LinkedList<Integer>();
-        qu.add(v);
-        vertexList[v].state = WAITING;
+        qu.add(v); //Insert start Vertex in the Queue
+        vertexList[v].state = WAITING; // Change state from INITIAL -> WAITING
 
         while(!qu.isEmpty()) {
 
-            v = qu.remove();
+            v = qu.remove(); //Front element of queue is deleted and visited
             System.out.print(vertexList[v] + " ");
-            vertexList[v].state = VISITED;
+            vertexList[v].state = VISITED; // Change state from WAITING -> VISITED
 
+            //insert into queue all the ADJACENT VERTICES who are in initial state
             for(int i = 0; i < n; i++) {
                 if(isAdjacent(v,i) && vertexList[i].state == INITIAL) {
                     qu.add(i);
-                    vertexList[i].state = WAITING;
+                    vertexList[i].state = WAITING; // Change state from INITIAL -> WAITING
                 }
             }
         }
@@ -165,7 +177,7 @@ public class DirectedGraph {
 
         for(v=0; v<n; v++) {
             if(vertexList[v].state == INITIAL)
-                bfs(v);
+                bfs(v); //once this loop is finished all the vertices will be in visited state
         }
     }
 

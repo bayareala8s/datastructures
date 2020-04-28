@@ -6,11 +6,11 @@ public class DirectedWeightedGraph {
 
     int n; //no of vertices in graph
     int e; //no of edges in graph
-    int [][] adj; //to add weights to the graph
+    int [][] adjacencyMatrix; // 0 for edge not present. weight for edge present in Matrix
     Vertex[] vertexList;
 
     public DirectedWeightedGraph() {
-        adj = new int[MAX_VERTICES][MAX_VERTICES];
+        adjacencyMatrix = new int[MAX_VERTICES][MAX_VERTICES];
         vertexList = new Vertex[MAX_VERTICES];
         // By default n=0, e=0
         // By default adj[u][v] = false
@@ -26,10 +26,10 @@ public class DirectedWeightedGraph {
     }
 
     public void display() {
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++) {    //Loop through number of Vertices - n
             for(int j = 0; j < n; j++)
 
-                System.out.print(adj[i][j] + " ");
+                System.out.print(adjacencyMatrix[i][j] + " ");
 
             System.out.println();
         }
@@ -53,21 +53,21 @@ public class DirectedWeightedGraph {
 
     private boolean isAdjacent(int u, int v) {
 
-        return (adj[u][v] != 0);
+        return (adjacencyMatrix[u][v] != 0);
     }
 
     /*Insert an edge (s1, s2) */
-    public void insertEdge(String s1, String s2, int wt) {
+    public void insertEdge(String s1, String s2, int wt) {  //pass weight to the vertex
         int u = getVertexIndex(s1);
         int v = getVertexIndex(s2);
 
         if(u == v)
             throw new IllegalArgumentException("Not a valid edge");
 
-        if(adj[u][v] != 0)
+        if(adjacencyMatrix[u][v] != 0)
             System.out.print("Edge already present");
         else {
-            adj[u][v] = wt;
+            adjacencyMatrix[u][v] = wt; //insert weight. Non-zero value
             e++;
         }
     }
@@ -76,10 +76,10 @@ public class DirectedWeightedGraph {
         int u = getVertexIndex(s1);
         int v = getVertexIndex(s2);
 
-        if(adj[u][v] == 0)
+        if(adjacencyMatrix[u][v] == 0)
             System.out.println("Edge not present in the graph");
         else {
-            adj[u][v] = 0;
+            adjacencyMatrix[u][v] = 0; //make weight as 0
             e--;
         }
     }
@@ -90,7 +90,7 @@ public class DirectedWeightedGraph {
 
         int out = 0;
         for(int v=0; v<n; v++)
-            if(adj[u][v] != 0)
+            if(adjacencyMatrix[u][v] != 0)
                 out++;
 
         return out;
@@ -102,7 +102,7 @@ public class DirectedWeightedGraph {
 
         int in = 0;
         for(int v = 0; v < n; v++)
-            if(adj[v][u] != 0)
+            if(adjacencyMatrix[v][u] != 0)
                 in++;
         return in;
     }
