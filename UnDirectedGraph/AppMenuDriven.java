@@ -83,3 +83,108 @@ public class AppMenuDriven {
         }
     }
 }
+
+/*
+/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/bin/java "-javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=52002:/Applications/IntelliJ IDEA.app/Contents/bin" -Dfile.encoding=UTF-8 -classpath /Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/ant-javafx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/dt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/javafx-mx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/jconsole.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/packager.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/sa-jdi.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/lib/tools.jar:/Users/himanshu/Downloads/twilio-7.0.0.jar:/Users/himanshu/bayareala8s/out/production/bayareala8s com.bayareala8s.UnDirectedGraph.AppMenuDriven
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 2
+Insert a vertex : zero
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 2
+Insert a vertex : one
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 2
+Insert a vertex : two
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 1
+0 0 0
+0 0 0
+0 0 0
+Vertices = 3, Edges = 0
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 3
+Enter start and end vertices : zero two
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 1
+0 0 1
+0 0 0
+1 0 0
+Vertices = 3, Edges = 1
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 3
+Enter start and end vertices : one two
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 1
+0 0 1
+0 0 1
+1 1 0
+Vertices = 3, Edges = 2
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice : 5
+Enter a vertex : two
+degree is : 2
+1. Display Adjacency Matrix
+2. Insert a vertex
+3. Insert an edge
+4. Delete an edge
+5. Display degree of a vertex
+6. Check if there is an edge between two vertices
+7. Exit
+Enter your choice :
+Process finished with exit code 130 (interrupted by signal 2: SIGINT)
+
+ */

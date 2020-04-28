@@ -6,11 +6,11 @@ public class UnDirectedWeightedGraph {
 
     int n; //no of vertices in graph
     int e; //no of edges in graph
-    int [][] adj;
+    int [][] adjacencyMatrix;
     Vertex[] vertexList;
 
     public UnDirectedWeightedGraph() {
-        adj = new int[MAX_VERTICES][MAX_VERTICES];
+        adjacencyMatrix = new int[MAX_VERTICES][MAX_VERTICES];
         vertexList = new Vertex[MAX_VERTICES];
         // By default n=0, e=0
         // By default adj[u][v] = false
@@ -28,7 +28,7 @@ public class UnDirectedWeightedGraph {
     public void display() {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++)
-                if(adj[i][j] != 0)
+                if(adjacencyMatrix[i][j] != 0)
                     System.out.print("1 ");
                 else
                     System.out.print("0 ");
@@ -53,7 +53,7 @@ public class UnDirectedWeightedGraph {
     }
 
     private boolean isAdjacent(int u, int v) {
-        return (adj[u][v] != 0);
+        return (adjacencyMatrix[u][v] != 0);
     }
 
     /*Insert an edge (s1, s2) */
@@ -62,11 +62,11 @@ public class UnDirectedWeightedGraph {
         int v = getVertexIndex(s2);
         if(u == v)
             throw new IllegalArgumentException("Not a valid edge");
-        if(adj[u][v] != 0)
+        if(adjacencyMatrix[u][v] != 0)
             System.out.print("Edge already present");
         else {
-            adj[u][v] = wt;
-            adj[v][u] = wt;
+            adjacencyMatrix[u][v] = wt; //put weights
+            adjacencyMatrix[v][u] = wt; //put weights
             e++;
         }
     }
@@ -75,11 +75,11 @@ public class UnDirectedWeightedGraph {
         int u = getVertexIndex(s1);
         int v = getVertexIndex(s2);
 
-        if(adj[u][v] == 0)
+        if(adjacencyMatrix[u][v] == 0)
             System.out.println("Edge not present in the graph");
         else {
-            adj[u][v] = 0;
-            adj[v][u] = 0;
+            adjacencyMatrix[u][v] = 0;
+            adjacencyMatrix[v][u] = 0;
             e--;
         }
     }
@@ -89,7 +89,7 @@ public class UnDirectedWeightedGraph {
 
         int deg = 0;
         for(int v = 0; v < n; v++)
-            if(adj[u][v] !=0 )
+            if(adjacencyMatrix[u][v] !=0 )
                 deg++;
         return deg;
     }
