@@ -16,7 +16,7 @@ public class MinItemStack {
 
     public void push(int item) {
 
-        //push the new item onto the stack
+        //push the new item onto the main stack
         mainStack.push(item);
 
         //first item is the same in both stacks
@@ -28,7 +28,8 @@ public class MinItemStack {
         //if the item is the largest one so far: we insert it onto the stack
         if(item < minStack.peek()) {
             minStack.push(item);
-        } else {
+        }
+        else {
             //if not the smallest one then we duplicate the smallest one on the minStack
             minStack.push(minStack.peek());
         }
