@@ -11,6 +11,12 @@ public class App {
         minItemStack.push(12);
         minItemStack.push(11);
 
-        System.out.println(minItemStack.getMinItem());
+        System.out.println("Minimum item in stack is: " + minItemStack.getMinItem());
     }
 }
+
+/*
+Minimum item in stack is: 5
+
+Process finished with exit code 0
+ */
